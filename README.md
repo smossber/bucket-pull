@@ -34,4 +34,36 @@ ls: cannot access './doesnotexist': No such file or directory
 It will not create the destination path (not that weird)  
 but it won't complain either and end exits with 0.
 
-Here bucket-pull diverge and throws an error instead.  
+Here bucket-pull diverge and throws an error instead. 
+
+### Notes on multi-processing
+
+With the `-m` flag we can enable multi-processing.  
+
+Here `bucket-pull` has opted for using the [`threading`](https://docs.python.org/3/library/threading.html#module-threading).  
+So, not _true_ paralellism and we only ever make use of one CPU.  
+However, since we are mostly IO bound (disk and network) there is  
+still some gain to be had by using multiple threads waiting for IO.  
+
+"very" scientific comparison:
+```
+# with multithreading
+time ./bucket-pull.py gs://smoss-tech-test-bucket/mydir /tmp/ -m
+...
+Downloading to /tmp/mydir/32mb.file
+Downloading to /tmp/mydir/128mb.file
+Downloading to /tmp/mydir/64mb.file
+Downloading to /tmp/mydir/a/1.txt
+Downloading to /tmp/mydir/a/b/2.txt
+./bucket-pull.py gs://smoss-tech-test-bucket/mydir /tmp/ -m  5.86s user 5.24s system 22% cpu 50.149 total
+
+# single thread
+time ./bucket-pull.py gs://smoss-tech-test-bucket/mydir /tmp/ 
+...
+Downloading to /tmp/mydir/128mb.file
+Downloading to /tmp/mydir/32mb.file
+Downloading to /tmp/mydir/64mb.file
+Downloading to /tmp/mydir/a/1.txt
+Downloading to /tmp/mydir/a/b/2.txt
+./bucket-pull.py gs://smoss-tech-test-bucket/mydir /tmp/  4.80s user 4.38s system 12% cpu 1:13.83 total
+```

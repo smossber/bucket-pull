@@ -6,6 +6,7 @@ import sys
 import os
 from urllib.parse import urlparse
 from pathlib import Path
+from threading import Thread
 
 parser = argparse.ArgumentParser(prog="bucket-syncer")
 
@@ -48,6 +49,7 @@ def list_blobs_in_dir(bucket_name,directory, storage_client):
     return blobs
 
 
+
 def download_blob(blob,destination_dir):
     path = Path(blob.name)
 
@@ -68,4 +70,8 @@ if __name__ == "__main__":
         # skip if blob is a directory, we create parent dirs when downloading the files
         if re.match("^(.*/)$",blob.name):
             continue
-        download_blob(blob,local_path)
+        if args.multithread:
+            t = Thread(target=download_blob,args=(blob,local_path))
+            t.start()
+        else:
+            download_blob(blob,local_path)
