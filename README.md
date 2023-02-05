@@ -10,14 +10,19 @@ bucket-pull gs://mybucketname ./mybucketname
 # download a directory and all it's content to a local dir
 bucket-pull gs://mybucketname/mydir ./
 
+
 ```
 
 ## Auth & Permissions
 
-The utility makes use of the Google SDK and by default will look for credentials according to: 
+The utility makes use of the Google SDK and uses [Client-Provided Authentication](https://googleapis.dev/python/google-api-core/latest/auth.html#client-provided-authentication) 
 
-The account you are connecting with will need at least the following permission on the Bucket directory.
-...
+The account you are connecting with will need at least `storage.buckets.get` on the bucket, which can be granted with the `roles/storage.legacyBucketReader`. 
+
+```
+gsutil iam ch serviceAccount:SERVICEACCOUNT@PROJECT.iam.gserviceaccount.com:legacyBucketReader  gs://bucket
+```
+
 
 ###  Some noteable differences 
 
