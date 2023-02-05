@@ -19,8 +19,6 @@ def fail(error):
     print("Error: " + error)
     sys.exit(1)
 
-
-
 bucket_url = args.bucket_url
 
 if not re.match(r"^gs://",bucket_url):
@@ -37,19 +35,6 @@ source_dir = source_dir.split("/")[1]
 print("source_dir: " + source_dir)
 
 local_path = args.local_path
-'''
-gsutil seems to have this  behaviour when the destination path doesn't exist
-$ gsutil cp -r  gs://smoss-tech-test-bucket/mydir/ ./doesnotexist/actually/
-$ echo $?
-0
-$ ls ./doesnotexist
-ls: cannot access './doesnotexist': No such file or directory
-
-It will not create the destination path (not that weird)
-but it won't complain either and end exit with 0.
-
-Here we will diverge and throw an error instead.
-'''
 if not os.path.exists(local_path):
     fail("Path %s does not exist" % local_path)
 
