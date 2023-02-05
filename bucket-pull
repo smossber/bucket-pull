@@ -8,11 +8,21 @@ from urllib.parse import urlparse
 from pathlib import Path
 from threading import Thread
 
-parser = argparse.ArgumentParser(prog="bucket-syncer")
+parser = argparse.ArgumentParser(prog="bucket-pull",
+                                 description="""
+                                    Utility to pull down everything in a bucket path to a local path.
+                                    """,
+                                 epilog="""
+                                    Example: bucket-pull gs://bucket/mydir /some/path
+                                    """)
 
 parser.add_argument('bucket_url', nargs='?', metavar="gs://bucket/path/to/dir")
 parser.add_argument('local_path', nargs='?',metavar="/path/to/destination")
 parser.add_argument('-m',action='store_true',dest='multithread',help="multithreaded sync")
+
+if len(sys.argv) < 2:
+    parser.print_help()
+    sys.exit(1)
 
 args = parser.parse_args()
 
