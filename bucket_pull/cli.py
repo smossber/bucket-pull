@@ -43,7 +43,6 @@ except:
 bucket_name = url.netloc
 source_dir = url.path
 source_dir = source_dir.split("/")[1]
-print("source_dir: " + source_dir)
 
 local_path = args.local_path
 if not os.path.exists(local_path):
@@ -86,6 +85,3 @@ def main():
             t.start()
         else:
             download_blob(blob,local_path)
-
-if __name__ == "__main__":
-    main()
