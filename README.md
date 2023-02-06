@@ -34,6 +34,11 @@ $ python -m bucket_pull gs://mybucketname ./mybucketname
 
 The utility makes use of the Google SDK and uses [Client-Provided Authentication](https://googleapis.dev/python/google-api-core/latest/auth.html#client-provided-authentication) 
 
+To run with exported SA key, you can make use of the GOOGLE_APPLICATION_CREDENTIALS environmental variable
+```
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/sa-credentials.json  bucket-pull gs://bucket/mydir /tmp/some/path
+```
+
 The account you are connecting with will need at least `storage.buckets.get` on the bucket, which can be granted with the `roles/storage.legacyBucketReader`. 
 
 ```
