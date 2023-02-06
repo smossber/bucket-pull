@@ -3,3 +3,6 @@ lib/
 bin/
 *.swp
 include/
+dist/
+*.egg-info
+*__pycache*

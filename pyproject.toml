@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bucket-pull"
+version = "0.0.1"
+readme = "README.md"
+dependencies = [
+    "google-cloud-storage",
+    "argparse",
+    "urllib3",
+    'importlib-metadata; python_version<"3.8"',
+]
+
+[project.scripts]
+bucket-pull = "bucket_pull.cli:main"

@@ -73,7 +73,8 @@ def download_blob(blob,destination_dir):
     blob.download_to_filename(str(destination_file_path))
 
 
-if __name__ == "__main__":
+
+def main():
     blob_list = list_blobs_in_dir(bucket_name,source_dir,storage_client)
 
     for blob in blob_list:
@@ -85,3 +86,6 @@ if __name__ == "__main__":
             t.start()
         else:
             download_blob(blob,local_path)
+
+if __name__ == "__main__":
+    main()

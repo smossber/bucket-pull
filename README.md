@@ -10,6 +10,23 @@ bucket-pull gs://mybucketname ./mybucketname
 # download a directory and all it's content to a local dir
 bucket-pull gs://mybucketname/mydir ./
 
+```
+
+## Get it
+
+```
+pip install bucket-pull
+```
+[https://pypi.org/project/bucket-pull/](https://pypi.org/project/bucket-pull/)
+
+## Run it
+
+```
+# as cli 
+$ bucket-pull gs://mybucketname ./mybucketname
+
+# as a module
+$ python -m bucket_pull gs://mybucketname ./mybucketname 
 
 ```
 
@@ -24,7 +41,7 @@ gsutil iam ch serviceAccount:SERVICEACCOUNT@PROJECT.iam.gserviceaccount.com:lega
 ```
 
 
-###  Some noteable differences 
+### Some noteable differences 
 
 gsutil seems to have this somewhat weird behaviour when the destination path doesn't exist
 
