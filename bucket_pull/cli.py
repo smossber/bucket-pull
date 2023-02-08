@@ -81,6 +81,9 @@ def main():
         if re.match("^(.*/)$",blob.name):
             continue
         if args.multithread:
+            # TODO: create one thread per download is not the best idea,
+            # since we could have quite a lot of files in a bucket.
+            # Should be capped to something reasonable or configurable
             t = Thread(target=download_blob,args=(blob,local_path))
             t.start()
         else:
